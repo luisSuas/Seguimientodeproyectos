@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Proyectos - Guatemala</title>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center my-4">Sistema de Seguimiento de Proyectos en Guatemala</h1>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Mapa de Proyectos</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="map" style="height: 600px;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Resumen General</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="summary-stats" class="mb-4">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="stat-card">
+                                        <h6>Total Proyectos</h6>
+                                        <h3 id="total-projects">0</h3>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="stat-card">
+                                        <h6>Inversión Total</h6>
+                                        <h3 id="total-investment">Q0</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h6>Proyectos por Departamento</h6>
+                            <div id="projects-by-department" style="height: 200px;"></div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h6>Inversión por Departamento</h6>
+                            <div id="investment-by-department" style="height: 200px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Proyectos por Estado</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="projects-by-status" style="height: 300px;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Proyectos por Función</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="projects-by-function" style="height: 300px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Detalle de Proyectos por Departamento</h5>
+                        <select id="department-select" class="form-select">
+                            <option value="">Seleccione un departamento</option>
+                        </select>
+                    </div>
+                    <div class="card-body">
+                        <table id="projects-table" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Municipio</th>
+                                    <th>Costo</th>
+                                    <th>Estado</th>
+                                    <th>Función</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
