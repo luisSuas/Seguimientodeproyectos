@@ -43,5 +43,10 @@ def get_departments():
 def get_projects(department):
     return jsonify(processor.get_projects_by_department(department))
 
+@app.route('/api/municipios/<department>', methods=['GET'])
+def get_municipios_by_department(department):
+    return jsonify(processor.get_municipios_by_department(department))
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

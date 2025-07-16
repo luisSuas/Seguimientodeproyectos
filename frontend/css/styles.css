@@ -65,3 +65,56 @@ body {
     background-color: #0d6efd;
     color: white;
 }
+
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-box {
+  display: none !important;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 6px;
+  background: #fff !important;
+  color: #333 !important;
+  padding: 12px;
+  border-radius: 6px;
+  width: 280px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  font-size: 0.9rem;
+  z-index: 2000;
+}
+
+.tooltip-container:hover .tooltip-box {
+  display: block !important;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.intro-card {
+  --ion-background-color: transparent;
+  background: linear-gradient(135deg, #3880ff 0%, #4c8dff 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-radius: 12px;
+}
+.intro-card ion-card-content {
+  padding: 1rem;
+}
+.intro-card ion-card-header {
+  padding-bottom: 0;
+}
+.intro-card ion-icon {
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}

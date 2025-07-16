@@ -6,34 +6,109 @@
     <title>Dashboard de Proyectos - Guatemala</title>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
     <link href="css/styles.css" rel="stylesheet">
 </head>
 <body>
     <div class="container-fluid">
+        <!-- Título -->
         <div class="row">
             <div class="col-md-12">
                 <h1 class="text-center my-4">Sistema de Seguimiento de Proyectos en Guatemala</h1>
             </div>
         </div>
         
-        <div class="row">
-            <div class="col-md-8">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h5>Mapa de Proyectos</h5>
-                    </div>
-                    <div class="card-body">
-                        <div id="map" style="height: 600px;"></div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h5>Resumen General</h5>
-                    </div>
-                    <div class="card-body">
+   
+ <ion-content>
+  <ion-grid>
+    <!-- FILA DEL BANNER -->
+    <ion-row>
+      <ion-col size="12" size-md="8">
+        <div
+          style="
+            background: linear-gradient(135deg, #3880ff 0%, #4dcaff 100%);
+            color: white;
+            padding: 1.5rem;
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            margin-bottom: 2rem;    /* ← aquí el “respiradero” */
+          "
+        >
+          <h2 style="margin: 0 0 0.5rem; font-size: 1.75rem; display: flex; align-items: center;">
+            <ion-icon name="rocket-outline" style="margin-right: 0.75rem;"></ion-icon>
+            Propósito del Dashboard
+          </h2>
+          <p style="margin: 0; line-height: 1.6;">
+            El Dashboard ha sido diseñado como una herramienta integral de monitoreo, control  
+            y análisis, orientada a facilitar la toma de decisiones estratégicas en tiempo real  
+            respecto al avance físico y financiero de los proyectos desarrollados en el país.
+          </p>
+        </div>
+      </ion-col>
+      <ion-col size="0" size-md="4"></ion-col>
+    </ion-row>
+
+    <!-- FILA DE MAPA + RESUMEN -->
+    <ion-row>
+      <ion-col size="12" size-md="8">
+        <!-- …Mapa… -->
+      </ion-col>
+      <ion-col size="12" size-md="4">
+        <!-- …Resumen… -->
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+
+<!-- Mapa + Resumen en la misma fila y altura igual -->
+<div class="row align-items-stretch">
+  <!-- Columna Mapa -->
+  <div class="col-md-8 d-flex mb-4">
+   <div class="card flex-fill d-flex flex-column" style="height:600px;">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <h5 class="mb-0">Mapa de Proyectos</h5>
+        <div class="d-flex">
+          <select id="map-dept-filter" class="form-select form-select-sm me-2">
+            <option value="">Todos los departamentos</option>
+          </select>
+          <select id="map-muni-filter" class="form-select form-select-sm" disabled>
+            <option value="">Todos los municipios</option>
+          </select>
+        </div>
+      </div>
+      <div class="card-body p-0 flex-fill">
+        <div id="map" style="height: 100%;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Columna Resumen General -->
+  <div class="col-md-4 d-flex mb-4">
+    <div class="card flex-fill d-flex flex-column" style="height:600px;">
+<div class="card-header d-flex align-items-center">
+  <h5 class="mb-0">Resumen General</h5>
+  <div class="tooltip-container ms-2">
+   <i id="general-tooltip-trigger"
+   class="bi bi-question-circle-fill"
+   style="cursor:pointer; color:#fff; font-size:1.4rem;"></i>
+    <div id="general-tooltip" class="tooltip-box">
+      <strong>¿Qué muestra este resumen?</strong><br><br>
+      Esta sección presenta el total de proyectos registrados a nivel nacional,<br>
+      así como el monto total de inversión estimada en quetzales.<br><br>
+      Los gráficos muestran:
+      <ul style="margin:0; padding-left:20px; font-size:0.9rem;">
+        <li>Proyectos por departamento</li>
+        <li>Inversión acumulada por departamento</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+      <!-- Fijamos la misma altura que el mapa y hacemos scroll si sobra contenido -->
+                <div class="card-body overflow-auto flex-fill">
                         <div id="summary-stats" class="mb-4">
                             <div class="row">
                                 <div class="col-6">
@@ -50,12 +125,10 @@
                                 </div>
                             </div>
                         </div>
-                        
                         <div class="mb-4">
                             <h6>Proyectos por Departamento</h6>
                             <div id="projects-by-department" style="height: 200px;"></div>
                         </div>
-                        
                         <div class="mb-4">
                             <h6>Inversión por Departamento</h6>
                             <div id="investment-by-department" style="height: 200px;"></div>
@@ -64,43 +137,287 @@
                 </div>
             </div>
         </div>
-        
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h5>Proyectos por Estado</h5>
-                    </div>
-                    <div class="card-body">
-                        <div id="projects-by-status" style="height: 300px;"></div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-md-6">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h5>Proyectos por Función</h5>
-                    </div>
-                    <div class="card-body">
-                        <div id="projects-by-function" style="height: 300px;"></div>
-                    </div>
-                </div>
-            </div>
+              
+<!-- Mapa + Resumen en la misma fila y altura igual -->
+<div class="row align-items-stretch mb-4">
+  <!-- Columna Mapa de Funciones -->
+  <div class="col-md-8 d-flex" style="height: 600px;">
+    <div class="card flex-fill d-flex flex-column h-100">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Mapa de Funciones</h5>
+        <div class="d-flex">
+          <select id="map2-dept-filter" class="form-select form-select-sm me-2">
+            <option value="">Todos los departamentos</option>
+          </select>
+          <select id="map2-muni-filter" class="form-select form-select-sm" disabled>
+            <option value="">Todos los municipios</option>
+          </select>
+          <select id="map2-func-filter" class="form-select form-select-sm ms-2" disabled>
+            <option value="">Todas las funciones</option>
+          </select>
         </div>
+      </div>
+      <div class="card-body p-0 flex-fill">
+        <div id="map2" class="h-100"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Columna Indicadores de Funciones -->
+  <div class="col-md-4 d-flex" style="height: 600px;">
+    <div class="card flex-fill d-flex flex-column h-100">
+      <div class="card-header d-flex align-items-center">
+        <h5 class="mb-0">Indicadores</h5>
+        <div class="tooltip-container ms-2">
+          <i id="func-tooltip-trigger"
+             class="bi bi-question-circle-fill"
+             style="cursor:pointer; font-size:1.2rem;"></i>
+          <div id="func-tooltip" class="tooltip-box">
+            <strong>¿Qué muestran estos indicadores?</strong><br><br>
+            Esta sección despliega la cantidad de proyectos agrupados por <b>función específica</b> (p.ej. Educación, Agua, Defensa, etc.).<br><br>
+            Usa los filtros de departamento y municipio para segmentar y analizar en qué sectores hay más inversión y actividad.
+          </div>
+        </div>
+      </div>
+      <div class="card-body overflow-auto flex-fill">
+        <div id="indicators-list" class="mt-2"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+ <!-- Mapa 3 + Resumen en la misma fila y altura igual -->
+<div class="row align-items-stretch mb-4">
+  <!-- Columna Mapa de Estados -->
+  <div class="col-md-8 d-flex mb-4" style="height: 600px;">
+    <div class="card flex-fill d-flex flex-column h-100">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Mapa de Estados</h5>
+        <div class="d-flex">
+          <select id="map3-dept-filter" class="form-select form-select-sm me-2">
+            <option value="">Todos los departamentos</option>
+          </select>
+          <select id="map3-muni-filter" class="form-select form-select-sm" disabled>
+            <option value="">Todos los municipios</option>
+          </select>
+          <select id="map3-state-filter" class="form-select form-select-sm ms-2" disabled>
+            <option value="">Todos los estados</option>
+          </select>
+        </div>
+      </div>
+      <div class="card-body p-0 flex-fill">
+        <div id="map3" class="h-100"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Columna Indicadores de Estados -->
+  <div class="col-md-4 d-flex mb-4" style="height: 600px;">
+    <div class="card flex-fill d-flex flex-column h-100">
+      <div class="card-header d-flex align-items-center">
+        <h5 class="mb-0">Indicadores</h5>
+        <div class="tooltip-container ms-2">
+          <i id="state-tooltip-trigger"
+             class="bi bi-question-circle-fill"
+             style="cursor:pointer; font-size:1.2rem;"></i>
+          <div id="state-tooltip" class="tooltip-box">
+            <strong>¿Qué muestran estos indicadores?</strong><br><br>
+            Esta sección presenta la cantidad de proyectos en cada <b>estado operativo</b>:<br>
+            🟢 Finalizado<br>
+            🟡 En ejecución<br>
+            🔴 Suspendido<br><br>
+            Usa los filtros de departamento y municipio para segmentar.
+          </div>
+        </div>
+      </div>
+      <div class="card-body overflow-auto flex-fill">
+        <div id="indicators-list-3" class="mt-2"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="row mt-4">
+  <div class="col-12">
+<!-- Detalle de Proyectos por Cronograma -->
+<div class="card mb-4">
+  <!-- Header -->
+  <!-- Header del cronograma con tooltip -->
+<div class="card-header d-flex align-items-center justify-content-between">
+  <div class="d-flex align-items-center"> 
+  <h5 class="mb-0">Detalle de Proyectos por Cronograma</h5>
+  <div class="tooltip-container ms-2">
+    <i id="cronograma-tooltip-trigger"
+       class="bi bi-question-circle-fill"
+       style="cursor:pointer; font-size:1.2rem;"></i>
+    <div id="cronograma-tooltip" class="tooltip-box">
+      <strong>¿Qué muestra este detalle?</strong><br><br>
+      Aquí se listan los proyectos filtrados por departamento y municipio, con sus fechas de inicio y fin,<br>
+      además de los días totales y los días transcurridos hasta la fecha, sus funciones específicas y su estado.
+    </div>
+  </div>
+</div>
+
+    <!-- Controles en línea -->
+    <div class="d-flex align-items-center">
+
+      <!-- Selector de departamento -->
+      <select id="date-dept-filter"
+              class="form-select form-select-sm me-3"
+              style="width:180px;">
+        <option value="">Seleccione un departamento</option>
+      </select>
+
+      <!-- Selector de municipio -->
+      <select id="date-muni-filter"
+              class="form-select form-select-sm me-3"
+              style="width:180px;"
+              disabled>
+        <option value="">Todos los municipios</option>
+      </select>
+
+      <!-- Input group para Mostrar X entradas -->
+      <div class="input-group input-group-sm" style="width:auto;">
+        <span class="input-group-text">Mostrar</span>
+        <select id="date-page-size"
+                class="form-select form-select-sm"
+                style="width:auto;">
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+        </select>
+        <span class="input-group-text">entradas</span>
+      </div>
+
+    </div>
+  </div>
+  
+  <!-- Body: tabla -->
+  <div class="card-body p-0">
+    <table class="table table-striped mb-0" id="date-projects-table">
+      <thead class="table-light">
+        <tr>
+          <th>Nombre de Proyecto</th>
+          <th>Fecha Inicio</th>
+          <th>Fecha Finalización</th>
+          <th>Días Totales</th>
+          <th>Días Incurridos</th>
+          <th>Función Específica</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+  <!-- Footer: paginador -->
+  <div class="card-footer d-flex justify-content-between align-items-center">
+    <button id="date-prev-page" class="btn btn-sm btn-outline-primary">« Anterior</button>
+    <span id="date-page-info">Página 1</span>
+    <button id="date-next-page" class="btn btn-sm btn-outline-primary">Siguiente »</button>
+  </div>
+</div>
+
+
+<!-- Gráficos secundarios -->
+<div class="row mt-4">
+  <!-- Proyectos por Estado -->
+  <div class="col-md-6 d-flex">
+    <div class="card flex-fill mb-4">
+      <div class="card-header d-flex align-items-center">
+        <h5 class="mb-0">Proyectos por Estado</h5>
+        <div class="tooltip-container ms-2">
+          <i id="status-tooltip-trigger"
+             class="bi bi-question-circle-fill"
+             style="cursor:pointer; color:#fff; font-size:1.1rem;"></i>
+          <div id="status-tooltip" class="tooltip-box">
+            <strong>¿Qué muestra este gráfico?</strong><br><br>
+            Este gráfico de pastel muestra la distribución de proyectos según su
+            <b>estado operativo</b> (En ejecución, Finalizado, Suspendido, etc.).
+          </div>
+        </div>
+      </div>
+      <div class="card-body px-3 py-4">
+        <div id="projects-by-status" style="height: 300px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Proyectos por Función -->
+  <div class="col-md-6 d-flex">
+    <div class="card flex-fill mb-4">
+      <div class="card-header d-flex align-items-center">
+        <h5 class="mb-0">Proyectos por Función</h5>
+        <div class="tooltip-container ms-2">
+          <i id="function-tooltip-trigger"
+             class="bi bi-question-circle-fill"
+             style="cursor:pointer; color:#fff; font-size:1.1rem;"></i>
+          <div id="function-tooltip" class="tooltip-box">
+            <strong>¿Qué muestra este gráfico?</strong><br><br>
+            Este gráfico de pastel muestra la distribución de proyectos según su
+            <b>función específica</b> (Educación, Agua, Cultura, etc.).
+          </div>
+        </div>
+      </div>
+      <div class="card-body px-3 py-4">
+        <div id="projects-by-function" style="height: 300px;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
         
+        <!-- Tabla con paginación -->
         <div class="row">
             <div class="col-md-12">
                 <div class="card mb-4">
-                    <div class="card-header">
-                        <h5>Detalle de Proyectos por Departamento</h5>
-                        <select id="department-select" class="form-select">
-                            <option value="">Seleccione un departamento</option>
-                        </select>
-                    </div>
-                    <div class="card-body">
-                        <table id="projects-table" class="table table-striped">
-                            <thead>
+<div class="card-header d-flex align-items-center justify-content-between">
+  <!-- 1) Agrupo título + tooltip + select -->
+  <div class="d-flex align-items-center">
+    <h5 class="mb-0">Detalle de Proyectos por Departamento</h5>
+    <div class="tooltip-container ms-2">
+      <i id="dept-tooltip-trigger"
+         class="bi bi-question-circle-fill"
+         style="cursor: pointer; color: #fff; font-size: 1.1rem;"></i>
+      <div id="dept-tooltip" class="tooltip-box">
+        <strong>¿Qué muestra esta tabla?</strong><br><br>
+        Aquí se listan todos los proyectos del departamento seleccionado,<br>
+        con su municipio, costo, estado operativo y función específica.<br><br>
+        Usa los controles para paginar y elegir cuántas entradas ver por página.
+      </div>
+    </div>
+    <select id="department-select" class="form-select w-auto ms-3">
+      <option value="">Seleccione un departamento</option>
+    </select>
+  </div>
+
+  <!-- 2) Controles de mostrar/paginación -->
+  <div class="d-flex align-items-center">
+    <span>Mostrar</span>
+    <select id="page-size" class="form-select d-inline-block w-auto mx-2">
+      <option>10</option>
+      <option>25</option>
+      <option>50</option>
+      <option>100</option>
+    </select>
+    <span>entradas</span>
+    <button id="prev-page" class="btn btn-light text-dark btn-sm ms-4" disabled>
+      &laquo; Anterior
+    </button>
+    <span id="page-info" class="mx-2">Página 1</span>
+    <button id="next-page" class="btn btn-light text-dark btn-sm" disabled>
+      Siguiente &raquo;
+    </button>
+  </div>
+</div>
+
+                    <div class="card-body p-0">
+                        <table id="projects-table" class="table table-striped mb-0">
+                            <thead class="table-primary">
                                 <tr>
                                     <th>Nombre</th>
                                     <th>Municipio</th>
@@ -117,6 +434,7 @@
         </div>
     </div>
 
+    <!-- Scripts -->
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
